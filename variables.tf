@@ -13,8 +13,26 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable "svc_accts" {
-  type        = list(string)
-  description = "Service accounts"
-  default     = ["ron.nutzman","sherrie.nutzman"]
+variable "asg.desired-size" {
+  description = "AWS Autoscaling Group - Desired Size"
+  default     = "1"
 }
+
+variable "asg.max-size" {
+  description = "AWS Autoscaling Group - Maximum Size"
+  default     = "1"
+}
+
+variable "asg.min-size" {
+  description = "AWS Autoscaling Group - Minimum Size"
+  default     = "1"
+}
+
+
+
+
+#variable "svc_accts" {
+#  type        = list(string)
+#  description = "Service accounts"
+#  default     = ["ron.nutzman","sherrie.nutzman"]
+#}
