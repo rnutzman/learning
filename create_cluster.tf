@@ -14,14 +14,14 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 resource "aws_eks_node_group" "worker-node-group" {
   cluster_name  = aws_eks_cluster.my-eks-cluster.name
   node_group_name = "my-eks-cluster-workernodes"
-  node_role_arn  = aws_iam_role.workernodes.arn
-  subnet_ids   = [var.subnet_id_1, var.subnet_id_2]
+  node_role_arn  = aws_iam_role.eks-workernode-iam-role.arn
+  subnet_ids   = [aws_subnet.eks-subnet-1.id,aws_subnet.eks-subnet-2.id, aws_subnet.eks-subnet-3.id]
   instance_types = ["t3.micro"]
  
   scaling_config {
-   desired_size = 1
-   max_size   = 1
-   min_size   = 1
+   desired_size = var.desired-size
+   max_size   = var.max-size
+   min_size   = var.min-size
   }
  
   depends_on = [
