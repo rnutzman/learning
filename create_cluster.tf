@@ -7,7 +7,7 @@ resource "aws_eks_cluster" "my-eks-cluster" {
  }
 
  depends_on = [
-  aws_iam_role.eks-iam-role,
+  aws_iam_role.eks-cluster-iam-role,
  ]
 }
 
@@ -30,6 +30,7 @@ resource "aws_eks_node_group" "worker-node-group" {
   }
  
   depends_on = [
+   aws_iam_role.eks-workernode-iam-role,
    aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
    #aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
