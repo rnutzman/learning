@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks-cluster-iam-role" {
- name = "eks-iam-role"
+ name = "eks-cluster-iam-role"
  path = "/"
 
  assume_role_policy = <<EOF
