@@ -9,6 +9,14 @@ module "iam-eks-role" {
   #  "staging-main-1"   = ["default:my-app-staging"]
   #  "staging-backup-1" = ["default:my-app-staging"]
   #}
+  
+  tags = {
+    Name = "eks-role"
+  }
+
+  role_policy_arns = {
+    AmazonEKS_CNI_Policy = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
+  }
 }
 
 resource "aws_iam_user" "test_svc_accts" {
