@@ -4,9 +4,9 @@ output "role_arn" {
   value = module.iam-eks-role.iam_role_arn
 }
 
-output "user_arns" {
-  description = "ARNs for created users"
-  value = [ for accts in aws_iam_user.test_svc_accts: accts.arn]
-}
+#output "user_arns" {
+#  description = "ARNs for created users"
+#  value = [ for accts in aws_iam_user.test_svc_accts: accts.arn]
+#}
 
 
