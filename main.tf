@@ -33,18 +33,6 @@ resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
   role       = aws_iam_role.eks-iam-role.name
 }
 
-resource "aws_eks_cluster" "my-eks-cluster" {
- name = var.cluster_name "my-eks-cluster"
- role_arn = aws_iam_role.eks-iam-role.arn
-
- vpc_config {
-  subnet_ids = [aws_vpc.eks-vpc.subnet_id_1, var.subnet_id_2]
- }
-
- depends_on = [
-  aws_iam_role.eks-iam-role,
- ]
-}
 
 
 
