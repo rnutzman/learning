@@ -1,6 +1,6 @@
 module "iam-eks-role" {
-  source  = "terraform-aws-modules/iam/aws//modules/iam-eks-role"
-  version = "5.28.0"
+  source = "terraform-aws-modules/iam/aws//modules/iam-eks-role"
+  #version = "5.28.0"
 
   role_name              = "my_eks_role"
   allow_self_assume_role = true
