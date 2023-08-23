@@ -1,5 +1,5 @@
 module "iam-eks-role" {
-  source  = "terraform-aws-modules/iam/aws//examples/iam-eks-role"
+  source  = "terraform-aws-modules/iam/aws//modules/iam-eks-role"
   version = "5.28.0"
 
   role_name              = "my_eks_role"
