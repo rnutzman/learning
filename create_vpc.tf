@@ -17,7 +17,7 @@ resource "aws_subnet" "eks-subnet-1" {
   
   tags = {
     Name = "eks-subnet-1"
-    VPC  = aws_vpc.eks-vpc.name
+    VPC  = aws_vpc.eks-vpc.id
     AZ   = "us-east-2a"
   }
 }
@@ -30,7 +30,7 @@ resource "aws_subnet" "eks-subnet-2" {
   
   tags = {
     Name = "eks-subnet-2"
-    VPC  = aws_vpc.eks-vpc.name
+    VPC  = aws_vpc.eks-vpc.id
     AZ   = "us-east-2b"
   }
 }
@@ -43,7 +43,7 @@ resource "aws_subnet" "eks-subnet-3" {
   
   tags = {
     Name = "eks-subnet-3"
-    VPC  = aws_vpc.eks-vpc.name
+    VPC  = aws_vpc.eks-vpc.id
     AZ   = "us-east-2c"
   }
 }
