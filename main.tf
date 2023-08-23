@@ -1,23 +1,52 @@
-module "iam-eks-role" {
-  source = "terraform-aws-modules/iam/aws//modules/iam-eks-role"
-  #version = "5.28.0"
+resource "aws_iam_role" "eks-iam-role" {
+ name = "eks-iam-role"
+ path = "/"
 
-  role_name              = "my_eks_role"
-  allow_self_assume_role = true
-
-  #cluster_service_accounts = {
-  #  "staging-main-1"   = ["default:my-app-staging"]
-  #  "staging-backup-1" = ["default:my-app-staging"]
-  #}
-  
-  tags = {
-    Name = "eks-role"
+ assume_role_policy = <<EOF
+{
+ "Version": "2012-10-17",
+ "Statement": [
+  {
+   "Effect": "Allow",
+   "Principal": {
+    "Service": "eks.amazonaws.com"
+   },
+   "Action": "sts:AssumeRole"
   }
-
-  role_policy_arns = {
-    AmazonEKS_CNI_Policy = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-  }
+ ]
 }
+EOF
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKSClusterPolicy" {
+ policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+ role       = aws_iam_role.eks-iam-role.name
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EKS" {
+ policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
+ role       = aws_iam_role.eks-iam-role.name
+}
+
+resource "aws_iam_role_policy_attachment" "AmazonEKSVPCResourceController" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSVPCResourceController"
+  role       = aws_iam_role.eks-iam-role.name
+}
+
+resource "aws_eks_cluster" "my-eks-cluster" {
+ name = var.cluster_name "my-eks-cluster"
+ role_arn = aws_iam_role.eks-iam-role.arn
+
+ vpc_config {
+  subnet_ids = [var.subnet_id_1, var.subnet_id_2]
+ }
+
+ depends_on = [
+  aws_iam_role.eks-iam-role,
+ ]
+}
+
+
 
 resource "aws_iam_user" "test_svc_accts" {
   for_each = toset(var.svc_accts)
