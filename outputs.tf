@@ -1,7 +1,7 @@
 output "role_arn" {
   description = "ARN for the eks role"
   #value = iam-eks-role.iam_role_arn
-  value = example_resource.example.my_eks_role_arn
+  value = module.iam-eks-role.iam_role_arn
 }
 
 output "user_arns" {
