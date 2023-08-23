@@ -25,10 +25,9 @@ resource "aws_iam_user" "test_svc_accts" {
   name = each.key
 }
 
-resource "iam-eks-role" "example" {
-  
- my_eks_role_arn = module.iam-eks-role.iam_role_arn
-}
+#resource "iam-eks-role" "example" {
+# my_eks_role_arn = module.iam-eks-role.iam_role_arn
+#}
 
 
 
