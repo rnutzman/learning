@@ -13,22 +13,22 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-variable cluster_name {
+variable "cluster_name" {
   description = "Cluster Name"
   default     = "my-eks-cluster"
 }
 
-variable "asg.desired-size" {
+variable "asg-desired-size" {
   description = "AWS Autoscaling Group - Desired Size"
   default     = "1"
 }
 
-variable "asg.max-size" {
+variable "asg-max-size" {
   description = "AWS Autoscaling Group - Maximum Size"
   default     = "1"
 }
 
-variable "asg.min-size" {
+variable "asg-min-size" {
   description = "AWS Autoscaling Group - Minimum Size"
   default     = "1"
 }
