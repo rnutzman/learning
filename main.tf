@@ -1,6 +1,14 @@
 module "iam-eks-role" {
   source  = "terraform-aws-modules/iam/aws//examples/iam-eks-role"
   version = "5.28.0"
+
+  role_name              = "my_eks_role"
+  allow_self_assume_role = true
+
+  #cluster_service_accounts = {
+  #  "staging-main-1"   = ["default:my-app-staging"]
+  #  "staging-backup-1" = ["default:my-app-staging"]
+  #}
 }
 
 resource "aws_iam_user" "test_svc_accts" {
@@ -9,7 +17,10 @@ resource "aws_iam_user" "test_svc_accts" {
   name = each.key
 }
 
-
+resource "example_resource" "example" {
+  
+ my_eks_role_arn = module.iam-eks-role.iam_role_arn
+}
 
 
 
