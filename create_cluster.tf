@@ -24,9 +24,9 @@ resource "aws_eks_node_group" "worker-node-group" {
   instance_types = ["t3.micro"]
  
   scaling_config {
-   desired_size = var.asg.desired-size
-   max_size   = var.asg.max-size
-   min_size   = var.asg.min-size
+   desired_size = var.asg-desired-size
+   max_size   = var.asg-max-size
+   min_size   = var.asg-min-size
   }
  
   depends_on = [
