@@ -13,6 +13,24 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
+# VPC Variables
+variable "aws_subnets" {
+  type    = list
+  default = ["vpc-10-1", "vpc-10-2"]
+}
+
+variable "aws_cidr" {
+  default = {
+    "vpc-10-1"       = "10.0.1.0/16"
+    "vpc-devt-proja" = "10.3.0.0/16"
+    "vpc-10-2"       = "10.2.0.0/16"
+    "vpc-devt-projx" = "10.4.0.0/16"
+  }
+}
+
+
+
+# EKS cluster variables
 variable "cluster_name" {
   description = "Cluster Name"
   default     = "my-eks-cluster"
