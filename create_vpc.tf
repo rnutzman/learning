@@ -12,6 +12,21 @@ resource "aws_vpc" "eks-vpc" {
   }
 }
 
+resource "aws_subnet" "eks-subnets" {
+  vpc_id     = aws_vpc.eks-vpc.id
+  cidr_block = "10.0.1.0/24"
+
+  map_public_ip_on_launch = false
+  availability_zone_id    = "use2-az1"
+  
+  tags = {
+    Name = "eks-subnet-1"
+    VPC  = aws_vpc.eks-vpc.id
+    AZ   = "us-east-2a"
+  }
+}
+
+
 resource "aws_subnet" "eks-subnet-1" {
   vpc_id     = aws_vpc.eks-vpc.id
   cidr_block = "10.0.1.0/24"
