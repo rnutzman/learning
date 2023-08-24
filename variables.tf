@@ -17,7 +17,7 @@ variable "aws_subnets" {
 
 variable "aws_subnet_cidr" {
   description "Subnet cidr blocks"
-  # probably want to make this mor dynamic
+  # probably want to make this more dynamic
   default = {
     "eks-subnet-1" = "10.0.1.0/24"
     "eks-subnet-2" = "10.0.2.0/24"
