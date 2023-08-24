@@ -13,19 +13,34 @@ resource "aws_vpc" "eks-vpc" {
 }
 
 resource "aws_subnet" "eks-subnets" {
-  vpc_id     = aws_vpc.eks-vpc.id
-  cidr_block = "10.0.1.0/24"
+  count      = var.aws_subnet_cnt
 
+  vpc_id                  = aws_vpc.eks-vpc.id
+  cidr_block              = lookup(var.aws_subnet_cidr, var.aws_subnets[count.index])
+  availability_zone_id    = lookup(var.aws_subnet_az, var.aws_subnets[count.index])
   map_public_ip_on_launch = false
-  availability_zone_id    = "use2-az1"
-  
+  enable_dns_hostnames    = false
+  enable_dns_support      = true
+
   tags = {
-    Name = "eks-subnet-1"
-    VPC  = aws_vpc.eks-vpc.id
-    AZ   = "us-east-2a"
+    Name                            = var.aws_subnets[count.index]
+    VPC                             = aws_vpc.eks-vpc.id
+    AZ                              = lookup(var.aws_subnet_az, var.aws_subnets[count.index])
+    kubernetes.io/role/internal-elb = 1
   }
 }
 
+resource "aws_vpc" "VPC" {
+  count                            = var.mycount
+  assign_generated_ipv6_cidr_block = false
+  cidr_block                       = lookup(var.aws_subnet_cidr, var.aws_subnets[count.index])
+  enable_dns_hostnames             = false
+  enable_dns_support               = true
+  instance_tenancy                 = "default"
+  tags = {
+    "Name" = var.aws_subnets[count.index]
+  }
+}
 
 resource "aws_subnet" "eks-subnet-1" {
   vpc_id     = aws_vpc.eks-vpc.id
