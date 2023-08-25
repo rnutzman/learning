@@ -5,18 +5,18 @@ variable "aws_region" {
 
 # VPC Variables
 variable "aws_subnet_cnt" {
-  description "Number of subnets to create (1 to 3)"
-  default = 2
+  description = "Number of subnets to create (1 to 3)"
+  default     = 2
 }
 
 variable "aws_subnets" {
-  description "Subnet names"
-  type    = list
-  default = ["eks-subnet-1", "eks-subnet-2", "eks-subnet-3"]
+  description = "Subnet names"
+  type        = list
+  default     = ["eks-subnet-1", "eks-subnet-2", "eks-subnet-3"]
 }
 
 variable "aws_subnet_cidr" {
-  description "Subnet cidr blocks"
+  description = "Subnet cidr blocks"
   # probably want to make this more dynamic
   default = {
     "eks-subnet-1" = "10.0.1.0/24"
@@ -26,7 +26,7 @@ variable "aws_subnet_cidr" {
 }
 
 variable "aws_subnet_az" {
-  description "List of availability zones to use"
+  description = "List of availability zones to use"
   default = {
     "eks-subnet-1" = "use2-az1"
     "eks-subnet-2" = "use2-az2"
