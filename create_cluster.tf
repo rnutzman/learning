@@ -32,9 +32,9 @@ resource "aws_eks_node_group" "worker-node-group" {
   cluster_name    = aws_eks_cluster.my-eks-cluster.name
   node_group_name = "my-eks-cluster-workernodes"
   node_role_arn   = aws_iam_role.eks-workernode-iam-role.arn
-  subnet_ids      = [aws_subnet.eks-subnets[*].id]
+  subnet_ids      = aws_subnet.eks-subnets[*].id
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_release_version.value)
-  instance_types  = ["t3.micro"]
+  instance_types  = ["t2.micro"]
  
   scaling_config {
    desired_size = var.asg-desired-size
