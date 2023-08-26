@@ -34,7 +34,7 @@ output "asg_name" {
   value = aws_autoscaling_group.eks_autoscaling_group.name
 }
 
-ourput "cluster_name" {
+output "cluster_name" {
   value = aws_eks_cluster.my-eks-cluster.name
 }
 
