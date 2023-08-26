@@ -42,13 +42,13 @@ resource "aws_eks_node_group" "worker-node-group" {
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_release_version.value)
   instance_types  = ["t2.micro"]
 
-  source_security_group_ids = aws_security_group.eks-cluster-sg.id
+  #source_security_group_ids = aws_security_group.eks-cluster-sg.id
 
-  scaling_config {
-   desired_size = var.asg-desired-size
-   max_size   = var.asg-max-size
-   min_size   = var.asg-min-size
-  }
+  #scaling_config {
+  # desired_size = var.asg-desired-size
+  # max_size   = var.asg-max-size
+  # min_size   = var.asg-min-size
+  #}
  
   depends_on = [
    aws_iam_role.eks-workernode-iam-role,
@@ -82,7 +82,7 @@ locals {
   eks-node-userdata = <<USERDATA
 #!/bin/bash
 set -o xtrace
-/etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.my-eks-cluster.endpoint}' --b64-cluster-ca '${aws_eks_cluster. my-eks-cluster.certificate_authority[0].data}' '${var.cluster-name}'
+/etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.my-eks-cluster.endpoint}' --b64-cluster-ca '${aws_eks_cluster. my-eks-cluster.certificate_authority[0].data}' '${var.cluster_name}'
 sudo yum update
 USERDATA
 
@@ -119,7 +119,7 @@ resource "aws_autoscaling_group" "eks_autoscaling_group" {
   }
 
   tag {
-    key                 = "kubernetes.io/cluster/${var.cluster-name}"
+    key                 = "kubernetes.io/cluster/${var.cluster_name}"
     value               = "owned"
     propagate_at_launch = true
   }
