@@ -105,7 +105,7 @@ resource "aws_launch_configuration" "eks_workernode_launch_config" {
 
 resource "aws_autoscaling_group" "eks_autoscaling_group" {
   name                 = "eks_autoscaling_group"
-  vpc_zone_identifier  = ["${aws_subnet.eks-subnets.*.id}"]
+  vpc_zone_identifier  = [${aws_subnet.eks-subnets.*.id}]
   launch_configuration = aws_launch_configuration.eks_workernode_launch_config.id
 
   max_size             = var.asg-max-size
