@@ -22,12 +22,12 @@ output "eks_workernode_role_arn" {
 
 output "cluster_sg" {
   description = "Cluster Security Group"
-  value = "Cluster Security Group: ${eks-cluster-sg}"
+  value = "Cluster Security Group: ${aws_security_group.eks-cluster-sg.name}"
 }
 
 output "node_sg" {
   description = "Node Security Group"
-  value = "Node Security Group: ${eks-node-sg}"
+  value = "Node Security Group: ${aws_security_group.eks-node-sg.name}"
 }
 
 output "asg_name" {

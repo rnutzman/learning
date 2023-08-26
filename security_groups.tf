@@ -5,15 +5,6 @@ resource "aws_security_group" "eks-cluster-sg" {
   description = "Cluster security group"
   vpc_id      = aws_vpc.eks-vpc.id
 
-  egress {
-    description = "Cluster communication with worker nodes"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    source_security_group_id = aws_security_group.eks-node-sg.id
-    #cidr_blocks = ["0.0.0.0/0"]
-  }
-
   tags = {
     Name = "eks-cluster-sg"
   }
@@ -34,7 +25,7 @@ resource "aws_security_group" "eks-node-sg" {
 
   tags = {
     "Name"                                      = "eks-node-sg"
-    "kubernetes.io/cluster/${var.cluster-name}" = "owned"
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
   }
 }
 
@@ -81,4 +72,12 @@ resource "aws_security_group_rule" "cluster-ingress-node-https" {
   type                     = "ingress"
 }
 
-
+resource "aws_security_group_rule" "cluster-egress" {
+  description = "Cluster communication with worker nodes"
+  from_port   = 0
+  to_port     = 0
+  protocol    = "-1"
+  source_security_group_id = aws_security_group.eks-node-sg.id
+  #cidr_blocks = ["0.0.0.0/0"]
+  type         = "egress"
+}
