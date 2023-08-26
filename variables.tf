@@ -41,26 +41,31 @@ variable "cluster_name" {
   default     = "my-eks-cluster"
 }
 
+variable "control_plane_logs" {
+  description = "EKS control plane logs (api, audit, authenticator, controllerManager, and/or scheduler) to send to cloudwatch"
+  type        = list
+  default     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+}
+
 variable "asg-desired-size" {
   description = "AWS Autoscaling Group - Desired Size"
-  default     = "1"
+  default     = 1
 }
 
 variable "asg-max-size" {
   description = "AWS Autoscaling Group - Maximum Size"
-  default     = "1"
+  default     = 1
 }
 
 variable "asg-min-size" {
   description = "AWS Autoscaling Group - Minimum Size"
-  default     = "1"
+  default     = 1
+}
+
+variable "eks_log_retention" {
+  description = "How long to store eks logs in cloudwatch"
+  default     = 3
 }
 
 
 
-
-#variable "svc_accts" {
-#  type        = list(string)
-#  description = "Service accounts"
-#  default     = ["ron.nutzman","sherrie.nutzman"]
-#}

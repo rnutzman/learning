@@ -7,21 +7,27 @@
 # ingress controller
 # Autoscaling group name
 # Configure remote access to nodes
-# enable logging
+# enable logging - done
 # configmap
 
 
 resource "aws_eks_cluster" "my-eks-cluster" {
- name = var.cluster_name 
- role_arn = aws_iam_role.eks-cluster-iam-role.arn
+  name = var.cluster_name 
+  role_arn = aws_iam_role.eks-cluster-iam-role.arn
 
- vpc_config {
-  subnet_ids = aws_subnet.eks-subnets[*].id
- }
-
- depends_on = [
-  aws_iam_role.eks-cluster-iam-role,
- ]
+  vpc_config {
+    subnet_ids              = aws_subnet.eks-subnets[*].id
+	#security_group_ids     = 
+	endpoint_public_access  = false
+	endpoint private_access = true
+  }
+  
+  enabled_cluster_log_types = [var.control_plane_logs]
+  
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+	aws_cloudwatch_log_group.eks_cloudwatch_logs,
+  ]
 }
 
 data "aws_ssm_parameter" "eks_ami_release_version" {
@@ -49,3 +55,9 @@ resource "aws_eks_node_group" "worker-node-group" {
    #aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
  }
+
+
+resource "aws_cloudwatch_log_group" "eks_cloudwatch_logs" {
+  name              = "/aws/eks/${var.cluster_name}/cluster"
+  retention_in_days = var.eks_log_retention
+}
