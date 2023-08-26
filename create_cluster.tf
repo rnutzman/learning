@@ -113,12 +113,13 @@ resource "aws_autoscaling_group" "eks_autoscaling_group" {
   min_size             = var.asg-min-size
   desired_capacity     = var.asg-desired-size
 
-  tags = concat( {
-        Name                                       = "eks_autoscaling_group"
-       "kubernetes.io/cluster/${var.cluster_name}" = "owned"
-    },	
-    var.default_tags,
-  )
+  tag = {
+    Name                                        = "eks_autoscaling_group"
+  }
+
+  tag = {
+    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+  }	
 }
 
 
