@@ -40,7 +40,7 @@ resource "aws_subnet" "eks-subnets" {
       },
       {
         "key"                 = "kubernetes.io/role/internal-elb"
-        "value"               = 1
+        "value"               = "1"
         "propagate_at_launch" = true
       },
       {
