@@ -25,17 +25,17 @@ resource "aws_subnet" "eks-subnets" {
     [
       {
         "key"                 = "Name"
-        "value"               = var.aws_subnets[count.index]
+        "value"               = "${var.aws_subnets[count.index]}"
         "propagate_at_launch" = true
       },
       {
         "key"                 = "VPC"
-        "value"               = aws_vpc.eks-vpc.id
+        "value"               = "${aws_vpc.eks-vpc.id}"
         "propagate_at_launch" = true
       },
       {
         "key"                 = "AZ"
-        "value"               = lookup(var.aws_subnet_az, var.aws_subnets[count.index])
+        "value"               = $"{lookup(var.aws_subnet_az, var.aws_subnets[count.index])}"
         "propagate_at_launch" = true
       },
       {
