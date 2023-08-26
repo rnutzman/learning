@@ -35,7 +35,7 @@ resource "aws_subnet" "eks-subnets" {
       },
       {
         "key"                 = "AZ"
-        "value"               = $"{lookup(var.aws_subnet_az, var.aws_subnets[count.index])}"
+        "value"               = "${lookup(var.aws_subnet_az, var.aws_subnets[count.index])}"
         "propagate_at_launch" = true
       },
       {
