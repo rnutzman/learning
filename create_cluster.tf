@@ -114,11 +114,15 @@ resource "aws_autoscaling_group" "eks_autoscaling_group" {
   desired_capacity     = var.asg-desired-size
 
   tag {
-    Name                                        = "eks_autoscaling_group"
+    key                 = "Name"
+	value               = "eks_autoscaling_group"
+    propagate_at_launch = true
   }
 
   tag {
-    "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+    key                 = "kubernetes.io/cluster/${var.cluster_name}" 
+	value               = "owned"
+    propagate_at_launch = true
   }	
 }
 
