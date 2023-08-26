@@ -21,13 +21,13 @@ resource "aws_subnet" "eks-subnets" {
   availability_zone_id    = lookup(var.aws_subnet_az, var.aws_subnets[count.index])
   map_public_ip_on_launch = false
 
-  tags = concat ({
+  tags = {
     "Name"                                        = var.aws_subnets[count.index],
     "VPC"                                         = aws_vpc.eks-vpc.id,
     "AZ"                                          = lookup(var.aws_subnet_az, var.aws_subnets[count.index]),
     "kubernetes.io/role/internal-elb"           = 1,
 	"kubernetes.io/cluster/${var.cluster_name}" = "shared",
-  }, var.default_tags)
+  }
 }
 
 
