@@ -12,7 +12,7 @@
 
 
 resource "aws_eks_cluster" "my-eks-cluster" {
-  name = var.cluster_name 
+  name     = var.cluster_name 
   role_arn = aws_iam_role.eks-cluster-iam-role.arn
 
   vpc_config {
@@ -21,16 +21,6 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 	endpoint_public_access  = false
 	endpoint_private_access = true
   }
-  
-  cluster_addons = {
-    coredns = {
-      resolve_conflicts = "OVERWRITE"
-    }
-    kube-proxy = {}
-    vpc-cni = {
-      resolve_conflicts = "OVERWRITE"
-    }
-  }  
   
   enabled_cluster_log_types = var.control_plane_logs
   
@@ -93,7 +83,7 @@ locals {
 #!/bin/bash
 set -o xtrace
 /etc/eks/bootstrap.sh --apiserver-endpoint '${aws_eks_cluster.my-eks-cluster.endpoint}' --b64-cluster-ca '${aws_eks_cluster. my-eks-cluster.certificate_authority[0].data}' '${var.cluster_name}'
-sudo yum update
+sudo yum update -y
 USERDATA
 
 }
