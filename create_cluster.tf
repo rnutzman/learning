@@ -44,11 +44,11 @@ resource "aws_eks_node_group" "worker-node-group" {
 
   #source_security_group_ids = aws_security_group.eks-cluster-sg.id
 
-  #scaling_config {
-  # desired_size = var.asg-desired-size
-  # max_size   = var.asg-max-size
-  # min_size   = var.asg-min-size
-  #}
+  scaling_config {
+   desired_size = var.asg-desired-size
+   max_size   = var.asg-max-size
+   min_size   = var.asg-min-size
+  }
  
   depends_on = [
    aws_iam_role.eks-workernode-iam-role,
