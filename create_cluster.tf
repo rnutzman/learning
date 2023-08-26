@@ -5,8 +5,8 @@
 # set the service IP range
 # Cluster addons
 # ingress controller
-# Autoscaling group name
-# Configure remote access to nodes
+# Autoscaling group name - done
+# Configure remote access to nodes - done
 # enable logging - done
 # configmap
 

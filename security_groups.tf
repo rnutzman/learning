@@ -61,6 +61,7 @@ resource "aws_security_group_rule" "node-ingress-cluster" {
  }
 
 
+
 #Cluster Security Group Rules
 resource "aws_security_group_rule" "cluster-ingress-node-https" {
   description              = "Allow pods to communicate with the cluster API Server"
@@ -74,10 +75,11 @@ resource "aws_security_group_rule" "cluster-ingress-node-https" {
 
 resource "aws_security_group_rule" "cluster-egress" {
   description = "Cluster communication with worker nodes"
-  from_port   = 0
-  to_port     = 0
-  protocol    = "-1"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  security_group_id        = aws_security_group.eks-cluster-sg.id
   source_security_group_id = aws_security_group.eks-node-sg.id
-  #cidr_blocks = ["0.0.0.0/0"]
-  type         = "egress"
+  #cidr_blocks             = ["0.0.0.0/0"]
+  type                     = "egress"
 }
