@@ -22,7 +22,7 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 	endpoint_private_access = true
   }
   
-  enabled_cluster_log_types = [var.control_plane_logs]
+  enabled_cluster_log_types = var.control_plane_logs
   
   depends_on = [
     aws_iam_role.eks-cluster-iam-role, 
