@@ -22,6 +22,16 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 	endpoint_private_access = true
   }
   
+  cluster_addons = {
+    coredns = {
+      resolve_conflicts = "OVERWRITE"
+    }
+    kube-proxy = {}
+    vpc-cni = {
+      resolve_conflicts = "OVERWRITE"
+    }
+  }  
+  
   enabled_cluster_log_types = var.control_plane_logs
   
   depends_on = [
@@ -35,7 +45,7 @@ data "aws_ssm_parameter" "eks_ami_release_version" {
 }
 
 resource "aws_eks_node_group" "worker-node-group" {
-  cluster_name    = aws_eks_cluster.my-eks-cluster.name
+  cluster_name    = var.cluster_name
   node_group_name = "my-eks-cluster-workernodes"
   node_role_arn   = aws_iam_role.eks-workernode-iam-role.arn
   subnet_ids      = aws_subnet.eks-subnets[*].id 
@@ -89,11 +99,12 @@ USERDATA
 }
 
 resource "aws_launch_configuration" "eks_workernode_launch_config" {
-  associate_public_ip_address = true
+  associate_public_ip_address = false
   #iam_instance_profile        = aws_iam_instance_profile.demo-node.name
   image_id                    = data.aws_ami.eks-worker.id
   instance_type               = "t2.micro"
   name_prefix                 = "eks-asg"
+  
   security_groups  = [aws_security_group.eks-node-sg.id]
   user_data_base64 = base64encode(local.eks-node-userdata)
 
@@ -112,17 +123,12 @@ resource "aws_autoscaling_group" "eks_autoscaling_group" {
   min_size             = var.asg-min-size
   desired_capacity     = var.asg-desired-size
 
-  tag {
-    key                 = "Name"
-    value               = "eks_autoscaling_group"
-    propagate_at_launch = true
-  }
-
-  tag {
-    key                 = "kubernetes.io/cluster/${var.cluster_name}"
-    value               = "owned"
-    propagate_at_launch = true
-  }
+  tags = concat( {
+        Name                                       = "eks_autoscaling_group"
+       "kubernetes.io/cluster/${var.cluster_name}" = "owned"
+    },	
+    var.default_tags,
+  )
 }
 
 
