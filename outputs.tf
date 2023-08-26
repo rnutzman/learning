@@ -20,3 +20,24 @@ output "eks_workernode_role_arn" {
   value = aws_iam_role.eks-workernode-iam-role.arn
 }
 
+output "cluster_sg" {
+  description = "Cluster Security Group"
+  value = "Cluster Security Group: ${eks-cluster-sg}"
+}
+
+output "node_sg" {
+  description = "Node Security Group"
+  value = "Node Security Group: ${eks-node-sg}"
+}
+
+output "asg_name" {
+  value = aws_autoscaling_group.eks_autoscaling_group.name
+}
+
+ourput "cluster_name" {
+  value = aws_eks_cluster.my-eks-cluster.name
+}
+
+
+
+

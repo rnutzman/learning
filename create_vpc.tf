@@ -29,3 +29,17 @@ resource "aws_subnet" "eks-subnets" {
 	"kubernetes.io/cluster/${var.cluster_name}" = "shared"
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

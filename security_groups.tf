@@ -10,7 +10,8 @@ resource "aws_security_group" "eks-cluster-sg" {
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
+    source_security_group_id = aws_security_group.eks-node-sg.id
+    #cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -23,15 +24,8 @@ resource "aws_security_group" "eks-node-sg" {
   description = "Node security group"
   vpc_id      = aws_vpc.eks-vpc.id
 
-  ingress {
-    description = "SSH from VPC"
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.eks-vpc.cidr_block]
-  }
-  
-  egress {
+   egress {
+    description = "Cluster communication out"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -44,14 +38,24 @@ resource "aws_security_group" "eks-node-sg" {
   }
 }
 
-
-resource "aws_security_group_rule" "demo-node-ingress-self" {
+#Node Security Group Rules
+resource "aws_security_group_rule" "node-ingress-self" {
   description              = "Allow nodes to communicate with each other"
   from_port                = 0
   protocol                 = "-1"
   security_group_id        = aws_security_group.eks-node-sg.id
   source_security_group_id = aws_security_group.eks-node-sg.id
   to_port                  = 65535
+  type                     = "ingress"
+}
+
+resource "aws_security_group_rule" "node-ingress-ssh" {
+  description              = "Allow instances in VPC to communicate with worker nodes"
+  from_port                = 22
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.eks-node-sg.id
+  cidr_blocks              = [aws_vpc.eks-vpc.cidr_block]
+  to_port                  = 22
   type                     = "ingress"
 }
 
@@ -65,6 +69,8 @@ resource "aws_security_group_rule" "node-ingress-cluster" {
   type                     = "ingress"
  }
 
+
+#Cluster Security Group Rules
 resource "aws_security_group_rule" "cluster-ingress-node-https" {
   description              = "Allow pods to communicate with the cluster API Server"
   from_port                = 443
