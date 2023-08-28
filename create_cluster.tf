@@ -93,7 +93,7 @@ resource "aws_eks_addon" "addon_csi_driver" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
   addon_name                  = var.csi_driver_addon.name
   addon_version               = var.csi_driver_addon.version
-  service_account_role_arn    = var.csi_driver_addon.role_arn
+  service_account_role_arn    = var.csi_driver_addon.role-arn
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
 
