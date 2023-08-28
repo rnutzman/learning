@@ -21,7 +21,7 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 	endpoint_public_access  = false
 	endpoint_private_access = true
   }
-  
+
   enabled_cluster_log_types = var.control_plane_logs
   
   depends_on = [
