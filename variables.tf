@@ -87,11 +87,11 @@ variable "core_dns_addon" {
   description = "core_dns addon with version"
   type = object({
     name     = string
-    version  = string
+    version  = number
   })
   default = {
     name     = "coredns"
-    version  = ""
+    version  = 
   }
 }
 
