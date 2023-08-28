@@ -32,7 +32,18 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 
 resource "aws_eks_addon" "addon-vpc-cni" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name   = "vpc-cni"
+  addon_name                  = var.vpc_cni_addon[0]
+  addon_version               = var.vpc_cni_addon[1]
+  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
+  depends_on                  = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
+
+  timeouts {
+    create = "30m"
+    update = "20m"
+    delete = "20m"
+  }
+
 }
 
 resource "aws_eks_addon" "addon-coredns" {
