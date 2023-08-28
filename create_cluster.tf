@@ -30,6 +30,21 @@ resource "aws_eks_cluster" "my-eks-cluster" {
   ]
 }
 
+resource "aws_eks_addon" "my-eks-cluster" {
+  cluster_name = aws_eks_cluster.my-eks-cluster.name
+  addon_name   = "vpc-cni"
+}
+
+resource "aws_eks_addon" "my-eks-cluster" {
+  cluster_name = aws_eks_cluster.my-eks-cluster.name
+  addon_name   = "coredns"
+}
+
+resource "aws_eks_addon" "my-eks-cluster" {
+  cluster_name = aws_eks_cluster.my-eks-cluster.name
+  addon_name   = "kube-proxy"
+}
+
 data "aws_ssm_parameter" "eks_ami_release_version" {
   name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.my-eks-cluster.version}/amazon-linux-2/recommended/release_version"
 }
