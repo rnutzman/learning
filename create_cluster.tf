@@ -24,10 +24,7 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 
   enabled_cluster_log_types = var.control_plane_logs
   
-  depends_on = [
-    aws_iam_role.eks-cluster-iam-role, 
-    aws_cloudwatch_log_group.eks_cloudwatch_logs,
-  ]
+  depends_on = [aws_iam_role.eks-cluster-iam-role, aws_cloudwatch_log_group.eks_cloudwatch_logs,]
 }
 
 resource "aws_eks_addon" "addon-vpc-cni" {
@@ -36,7 +33,6 @@ resource "aws_eks_addon" "addon-vpc-cni" {
   addon_version               = var.vpc_cni_addon[1]
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
-  depends_on                  = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
 
   timeouts {
     create = "30m"
@@ -44,16 +40,39 @@ resource "aws_eks_addon" "addon-vpc-cni" {
     delete = "20m"
   }
 
+  depends_on = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
 }
 
-resource "aws_eks_addon" "addon-coredns" {
+resource "aws_eks_addon" "addon-core_dns" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name   = "coredns"
+  addon_name                  = var.core_dns_addon[0]
+  addon_version               = var.core_dns_addon[1]
+  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
+
+  timeouts {
+    create = "30m"
+    update = "20m"
+    delete = "20m"
+  }
+
+  depends_on = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
 }
 
 resource "aws_eks_addon" "addon-kube-proxy" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name   = "kube-proxy"
+  addon_name                  = var.kube_proxy_addon[0]
+  addon_version               = var.kube_proxy_addon[1]
+  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
+
+  timeouts {
+    create = "30m"
+    update = "20m"
+    delete = "20m"
+  }
+
+  depends_on = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
 }
 
 # EKS Node Group
