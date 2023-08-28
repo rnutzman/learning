@@ -74,9 +74,10 @@ variable "csi_driver_addon" {
   type = object({
     name    = "aws-ebs-csi-driver"
     version = ""
-  })default = {
-    "aws-ebs-csi-driver" = ""
-  }
+  })
+  #default = {
+  #  "aws-ebs-csi-driver" = ""
+  #}
 }
 
 variable "core_dns_addon" {
