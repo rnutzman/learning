@@ -10,7 +10,7 @@
 # enable logging - done
 # configmap
 
-s
+
 resource "aws_eks_cluster" "my-eks-cluster" {
   name     = var.cluster_name 
   role_arn = aws_iam_role.eks-cluster-iam-role.arn
@@ -30,17 +30,17 @@ resource "aws_eks_cluster" "my-eks-cluster" {
   ]
 }
 
-resource "aws_eks_addon" "my-eks-cluster" {
+resource "aws_eks_addon" "addon-vpc-cni" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
   addon_name   = "vpc-cni"
 }
 
-resource "aws_eks_addon" "my-eks-cluster" {
+resource "aws_eks_addon" "addon-coredns" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
   addon_name   = "coredns"
 }
 
-resource "aws_eks_addon" "my-eks-cluster" {
+resource "aws_eks_addon" "addon-kube-proxy" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
   addon_name   = "kube-proxy"
 }
