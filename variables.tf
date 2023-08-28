@@ -67,11 +67,42 @@ variable "eks_log_retention" {
   default     = 3
 }
 
+# Cluster Addon Variables
+variable "csi_driver_addon" {
+  description = "csi_driver_addon with version"
+  default = {
+    "aws-ebs-csi-driver" = ""
+  }
+}
+
+variable "core_dns_addon" {
+  description = "core_dns addon with version"
+  default = {
+    "core_dns" = ""
+  }
+}
+
+variable "kube-proxy_addon" {
+  description = "kube-proxy addon with version"
+  default = {
+    "kube-proxy" = ""
+  }
+}
+
+variable "vpc-cni_addon" {
+  description = "vpc-cni addon with version"
+  default = {
+    "vpc-cni" = ""
+  }
+}
+
+
+
 
 variable "default_tags" {
   default = {
-      "POC"         = "RNutzman"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCuOzwvOoiIfsJd3XFUQjehR5LpSepgV04qEItNkMWuuxC68uS6x7DbG8uRH5/eZbpTMdvsWYML3Xu7ue0JD0lUhV1jmYfp1MfYaWsVV/8+S/CtaESk6H9jaTD1m9yDvgalc5w2T6Y5bG2LzOHVaEwYpSnMcjIciVMw7odEKncqXQ7OOqdufv0AlqUoH3IlwZHh1A6tC3jMXuicLkhrPIjgTGmPWns1c9osLGFTmZqa/pOIUUpoPZAV0JljHqZPNqcgpAh8o0xa3+pzGG0N2GwKoynZBjaAOtEopt7o3GbC0OeI/ch7fBZ/pxeXAzAUFGOSyz7NvCrp1cjLCyENJc1Ow+RB+gwGyUvVj8SAk3lvkiDBcDiR2JfguCQjghjSyfw2OsDrXtTotJstAEt1ZB/0++lWctXgL9BllBr6G5wUXhoGBug5llinrdA0VlohEaVvT92wc4T5GC2Je8hHBR5Q7baq593/swbNuWKocU0kCBLbxyyFrm1f52zHY/YCde8= ron.nutzman_cn@CMW-7LFZBV3.cacicorenet.com
-      "Environment" = "DEV"
+    "POC"         = "RNutzman"
+    "Environment" = "DEV"
   }
 }
 
