@@ -24,7 +24,10 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 
   enabled_cluster_log_types = var.control_plane_logs
   
-  depends_on = [aws_iam_role.eks-cluster-iam-role, aws_cloudwatch_log_group.eks_cloudwatch_logs,]
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_cloudwatch_log_group.eks_cloudwatch_logs,
+  ]
 }
 
 resource "aws_eks_addon" "addon_vpc_cni" {
@@ -40,7 +43,10 @@ resource "aws_eks_addon" "addon_vpc_cni" {
     delete = "20m"
   }
 
-  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster, 
+    aws_eks_node_group.worker-node-group]
 }
 
 resource "aws_eks_addon" "addon_core_dns" {
@@ -56,7 +62,11 @@ resource "aws_eks_addon" "addon_core_dns" {
     delete = "20m"
   }
 
-  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster, 
+    aws_eks_node_group.worker-node-group
+  ]
 }
 
 resource "aws_eks_addon" "addon_kube_proxy" {
@@ -72,7 +82,11 @@ resource "aws_eks_addon" "addon_kube_proxy" {
     delete = "20m"
   }
 
-  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster, 
+    aws_eks_node_group.worker-node-group
+  ]
 }
 
 resource "aws_eks_addon" "addon_csi_driver" {
@@ -88,7 +102,11 @@ resource "aws_eks_addon" "addon_csi_driver" {
     delete = "20m"
   }
 
-  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster, 
+    aws_eks_node_group.worker-node-group
+  ]
 }
 
 
