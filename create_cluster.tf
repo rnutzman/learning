@@ -59,7 +59,7 @@ resource "aws_eks_node_group" "worker-node-group" {
   instance_types  = ["t2.micro"]
 
   remote_access {
-    source_security_group_ids = aws_security_group.eks-cluster-sg.id
+    source_security_group_ids = [aws_security_group.eks-cluster-sg.id]
   }
 
   scaling_config {
