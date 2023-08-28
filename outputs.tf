@@ -38,6 +38,8 @@ output "cluster_name" {
   value = aws_eks_cluster.my-eks-cluster.name
 }
 
-
+output "endpoint" {
+  value = aws_eks_cluster.my-eks-cluster.endpoint
+}
 
 
