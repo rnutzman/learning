@@ -72,12 +72,15 @@ variable "eks_log_retention" {
 variable "csi_driver_addon" {
   description = "csi_driver_addon with version"
   type = object({
-    name    = "aws-ebs-csi-driver"
-    version = ""
+    name     = string
+    version  = string
+    role-arn = string
   })
-  #default = {
-  #  "aws-ebs-csi-driver" = ""
-  #}
+  default = {
+    name     = "aws-ebs-csi-driver"
+    version  = ""
+    role-arn = ""
+  }
 }
 
 variable "core_dns_addon" {
