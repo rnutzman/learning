@@ -71,14 +71,8 @@ variable "eks_log_retention" {
 variable "default_tags" {
   default = [
     {
-      key                 = "POC"
-      value               = "RNutzman"
-      propagate_at_launch = true
-    },
-    {
-      key                 = "Environment"
-      value               = "DEV"
-      propagate_at_launch = true
-    },
+      "POC"         = "RNutzman"
+      "Environment" = "DEV"
+    }
   ]
 }
