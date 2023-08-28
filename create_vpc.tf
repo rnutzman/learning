@@ -23,9 +23,9 @@ resource "aws_subnet" "eks-subnets" {
 
   tags = [
     {
-      "Name"                                      = "${var.aws_subnets[count.index]}"
-      "VPC"                                       = "${aws_vpc.eks-vpc.id}"
-      "AZ"                                        = "${lookup(var.aws_subnet_az, var.aws_subnets[count.index])}"
+      "Name"                                      = var.aws_subnets[count.index]
+      "VPC"                                       = aws_vpc.eks-vpc.id
+      "AZ"                                        = lookup(var.aws_subnet_az, var.aws_subnets[count.index])
       "kubernetes.io/role/internal-elb"           = "1"
       "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }
