@@ -32,8 +32,8 @@ resource "aws_eks_cluster" "my-eks-cluster" {
 
 resource "aws_eks_addon" "addon_vpc_cni" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.vpc_cni_addon[0]
-  addon_version               = var.vpc_cni_addon[1]
+  addon_name                  = var.vpc_cni_addon.name
+  addon_version               = var.vpc_cni_addon.version
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
 
@@ -51,8 +51,8 @@ resource "aws_eks_addon" "addon_vpc_cni" {
 
 resource "aws_eks_addon" "addon_core_dns" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.core_dns_addon[0]
-  addon_version               = var.core_dns_addon[1]
+  addon_name                  = var.core_dns_addon.name
+  addon_version               = var.core_dns_addon.version
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
 
@@ -71,8 +71,8 @@ resource "aws_eks_addon" "addon_core_dns" {
 
 resource "aws_eks_addon" "addon_kube_proxy" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.kube_proxy_addon[0]
-  addon_version               = var.kube_proxy_addon[1]
+  addon_name                  = var.kube_proxy_addon.name
+  addon_version               = var.kube_proxy_addon.version
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
 
