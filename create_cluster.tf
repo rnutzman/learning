@@ -91,8 +91,8 @@ resource "aws_eks_addon" "addon_kube_proxy" {
 
 resource "aws_eks_addon" "addon_csi_driver" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.csi_driver_addon[0]
-  addon_version               = var.csi_driver_addon[1]
+  addon_name                  = var.csi_driver_addon.name
+  addon_version               = var.csi_driver_addon.version
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
 
