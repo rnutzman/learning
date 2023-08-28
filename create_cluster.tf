@@ -10,7 +10,7 @@
 # enable logging - done
 # configmap
 
-
+s
 resource "aws_eks_cluster" "my-eks-cluster" {
   name     = var.cluster_name 
   role_arn = aws_iam_role.eks-cluster-iam-role.arn
@@ -45,11 +45,13 @@ resource "aws_eks_addon" "my-eks-cluster" {
   addon_name   = "kube-proxy"
 }
 
+# EKS Node Group
 data "aws_ssm_parameter" "eks_ami_release_version" {
+  description = "Get eks optimized ami"
   name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.my-eks-cluster.version}/amazon-linux-2/recommended/release_version"
 }
 
-resource "aws_eks_node_group" "worker-node-group" {
+resource "aws_ks_node_group" "worker-node-group" {
   cluster_name    = var.cluster_name
   node_group_name = "my-eks-cluster-workernodes"
   node_role_arn   = aws_iam_role.eks-workernode-iam-role.arn
@@ -57,7 +59,9 @@ resource "aws_eks_node_group" "worker-node-group" {
   release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_release_version.value)
   instance_types  = ["t2.micro"]
 
-  #source_security_group_ids = aws_security_group.eks-cluster-sg.id
+  remote_access {
+    source_security_group_ids = aws_security_group.eks-cluster-sg.id
+  }
 
   scaling_config {
     desired_size = var.asg-desired-size
