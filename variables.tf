@@ -69,10 +69,8 @@ variable "eks_log_retention" {
 
 
 variable "default_tags" {
-  default = [
-    {
+  default = {
       "POC"         = "RNutzman"
       "Environment" = "DEV"
-    }
-  ]
+  }
 }
