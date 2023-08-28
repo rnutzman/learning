@@ -27,7 +27,7 @@ resource "aws_eks_cluster" "my-eks-cluster" {
   depends_on = [aws_iam_role.eks-cluster-iam-role, aws_cloudwatch_log_group.eks_cloudwatch_logs,]
 }
 
-resource "aws_eks_addon" "addon-vpc-cni" {
+resource "aws_eks_addon" "addon_vpc_cni" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
   addon_name                  = var.vpc_cni_addon[0]
   addon_version               = var.vpc_cni_addon[1]
@@ -40,10 +40,10 @@ resource "aws_eks_addon" "addon-vpc-cni" {
     delete = "20m"
   }
 
-  depends_on = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
+  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
 }
 
-resource "aws_eks_addon" "addon-core_dns" {
+resource "aws_eks_addon" "addon_core_dns" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
   addon_name                  = var.core_dns_addon[0]
   addon_version               = var.core_dns_addon[1]
@@ -56,10 +56,10 @@ resource "aws_eks_addon" "addon-core_dns" {
     delete = "20m"
   }
 
-  depends_on = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
+  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
 }
 
-resource "aws_eks_addon" "addon-kube-proxy" {
+resource "aws_eks_addon" "addon_kube_proxy" {
   cluster_name = aws_eks_cluster.my-eks-cluster.name
   addon_name                  = var.kube_proxy_addon[0]
   addon_version               = var.kube_proxy_addon[1]
@@ -72,8 +72,26 @@ resource "aws_eks_addon" "addon-kube-proxy" {
     delete = "20m"
   }
 
-  depends_on = [module.iam-eks, aws_eks_cluster.fv_ekscluster, aws_eks_node_group.MNG1]
+  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
 }
+
+resource "aws_eks_addon" "addon_csi_driver" {
+  cluster_name = aws_eks_cluster.my-eks-cluster.name
+  addon_name                  = var.csi_driver_addon[0]
+  addon_version               = var.csi_driver_addon[1]
+  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
+
+  timeouts {
+    create = "30m"
+    update = "20m"
+    delete = "20m"
+  }
+
+  depends_on = [module.iam-eks, aws_eks_cluster.my-eks-cluster, aws_eks_node_group.worker-node-group]
+}
+
+
 
 # EKS Node Group
 data "aws_ssm_parameter" "eks_ami_release_version" {
