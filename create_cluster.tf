@@ -50,7 +50,7 @@ resource "aws_eks_addon" "addon_vpc_cni" {
 }
 
 resource "aws_eks_addon" "addon_core_dns" {
-  cluster_name = aws_eks_cluster.my-eks-cluster.name
+  cluster_name                = aws_eks_cluster.my-eks-cluster.name
   addon_name                  = var.core_dns_addon.name
   addon_version               = var.core_dns_addon.version
   resolve_conflicts_on_update = "OVERWRITE"
