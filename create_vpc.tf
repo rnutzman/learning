@@ -47,7 +47,7 @@ resource "aws_subnet" "eks-subnets" {
         "key"                 = "kubernetes.io/cluster/${var.cluster_name}"
         "value"               = "shared"
         "propagate_at_launch" = true
-      },
+      }
     ],
 	var.default_tags,
   )
