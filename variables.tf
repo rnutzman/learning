@@ -3,7 +3,7 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-# VPC Variables
+# VPC Variablesstring
 variable "aws_subnet_cnt" {
   description = "Number of subnets to create (1 to 3)"
   default     = 2
@@ -67,10 +67,14 @@ variable "eks_log_retention" {
   default     = 3
 }
 
+
 # Cluster Addon Variables
 variable "csi_driver_addon" {
   description = "csi_driver_addon with version"
-  default = {
+  type = object({
+    name    = "aws-ebs-csi-driver"
+    version = ""
+  })default = {
     "aws-ebs-csi-driver" = ""
   }
 }
