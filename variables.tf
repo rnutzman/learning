@@ -53,7 +53,7 @@ variable "asg-desired-size" {
 }
 
 variable "asg-max-size" {
-  description = "AWS Autoscaling Group - Maximum Size"core_dns_addon
+  description = "AWS Autoscaling Group - Maximum Size"
   default     = 1
 }
 
@@ -78,7 +78,7 @@ variable "csi_driver_addon" {
   })
   default = {
     name     = "aws-ebs-csi-driver"
-    version  = ""core_dns_addon
+    version  = ""
     role-arn = ""
   }
 }
