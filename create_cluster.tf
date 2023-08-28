@@ -47,11 +47,10 @@ resource "aws_eks_addon" "addon-kube-proxy" {
 
 # EKS Node Group
 data "aws_ssm_parameter" "eks_ami_release_version" {
-  description = "Get eks optimized ami"
   name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.my-eks-cluster.version}/amazon-linux-2/recommended/release_version"
 }
 
-resource "aws_ks_node_group" "worker-node-group" {
+resource "aws_eks_node_group" "worker-node-group" {
   cluster_name    = var.cluster_name
   node_group_name = "my-eks-cluster-workernodes"
   node_role_arn   = aws_iam_role.eks-workernode-iam-role.arn
