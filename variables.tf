@@ -91,7 +91,7 @@ variable "core_dns_addon" {
   })
   default = {
     name     = "coredns"
-    version  = 
+    version  = -1
   }
 }
 
