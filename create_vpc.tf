@@ -23,29 +23,11 @@ resource "aws_subnet" "eks-subnets" {
 
   tags = [
     {
-      "key"                 = "Name"
-      "value"               = "${var.aws_subnets[count.index]}"
-      "propagate_at_launch" = true
-    },
-    {
-      "key"                 = "VPC"
-      "value"               = "${aws_vpc.eks-vpc.id}"
-      "propagate_at_launch" = true
-    },
-    {
-      "key"                 = "AZ"
-      "value"               = "${lookup(var.aws_subnet_az, var.aws_subnets[count.index])}"
-      "propagate_at_launch" = true
-    },
-    {
-      "key"                 = "kubernetes.io/role/internal-elb"
-      "value"               = "1"
-      "propagate_at_launch" = true
-    },
-    {
-      "key"                 = "kubernetes.io/cluster/${var.cluster_name}"
-      "value"               = "shared"
-      "propagate_at_launch" = true
+      "Name"                                      = "${var.aws_subnets[count.index]}"
+      "VPC"                                       = "${aws_vpc.eks-vpc.id}"
+      "AZ"                                        = "${lookup(var.aws_subnet_az, var.aws_subnets[count.index])}"
+      "kubernetes.io/role/internal-elb"           = "1"
+      "kubernetes.io/cluster/${var.cluster_name}" = "shared"
     }
   ]
 }
