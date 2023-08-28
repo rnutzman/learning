@@ -60,7 +60,7 @@ resource "aws_eks_node_group" "worker-node-group" {
 
   remote_access {
     ec2_ssh_key = var.ec2_ssh_key
-    source_security_group_ids = [aws_security_group.eks-cluster-sg.id]
+    source_security_group_ids = [aws_security_group.eks-node-sg.id]
   }
 
   scaling_config {
