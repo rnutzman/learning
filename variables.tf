@@ -78,18 +78,18 @@ variable "csi_driver_addon" {
 variable "core_dns_addon" {
   description = "core_dns addon with version"
   default = {
-    "core_dns" = ""
+    "coredns" = ""
   }
 }
 
-variable "kube-proxy_addon" {
+variable "kube_proxy_addon" {
   description = "kube-proxy addon with version"
   default = {
     "kube-proxy" = ""
   }
 }
 
-variable "vpc-cni_addon" {
+variable "vpc_cni_addon" {
   description = "vpc-cni addon with version"
   default = {
     "vpc-cni" = ""
