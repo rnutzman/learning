@@ -30,9 +30,9 @@ output "node_sg" {
   value = "Node Security Group: ${aws_security_group.eks-node-sg.name}"
 }
 
-output "asg_name" {
-  value = aws_autoscaling_group.eks_autoscaling_group.name
-}
+#output "asg_name" {
+#  value = aws_autoscaling_group.eks_autoscaling_group.name
+#}
 
 output "cluster_name" {
   value = aws_eks_cluster.my-eks-cluster.name
