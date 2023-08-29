@@ -126,7 +126,7 @@ variable nodes {
   description = "Node values"
   type = object({
     ami-type       = string
-    instance-types = string
+    instance-type  = string
     capacity-type  = string
 	disk-size      = number
   })
