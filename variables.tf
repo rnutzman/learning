@@ -3,7 +3,7 @@ variable "aws_region" {
   default     = "us-east-2"
 }
 
-# VPC Variablesstring
+# VPC Variables
 variable "aws_subnet_cnt" {
   description = "Number of subnets to create (1 to 3)"
   default     = 2
@@ -45,26 +45,6 @@ variable "control_plane_logs" {
   description = "EKS control plane logs (api, audit, authenticator, controllerManager, and/or scheduler) to send to cloudwatch"
   type        = list
   default     = ["api", "audit", "authenticator", "controllerManager", "scheduler"]
-}
-
-variable "asg-desired-size" {
-  description = "AWS Autoscaling Group - Desired Size"
-  default     = 1
-}
-
-variable "asg-max-size" {
-  description = "AWS Autoscaling Group - Maximum Size"
-  default     = 1
-}
-
-variable "asg-min-size" {
-  description = "AWS Autoscaling Group - Minimum Size"
-  default     = 1
-}
-
-variable "eks_log_retention" {
-  description = "How long to store eks logs in cloudwatch"
-  default     = 3
 }
 
 
@@ -121,6 +101,41 @@ variable "addon" {
 }
 
 
+# EKS cluster node workgroup variables
+variable "asg-desired-size" {
+  description = "AWS Autoscaling Group - Desired Size"
+  default     = 1
+}
+
+variable "asg-max-size" {
+  description = "AWS Autoscaling Group - Maximum Size"
+  default     = 1
+}
+
+variable "asg-min-size" {
+  description = "AWS Autoscaling Group - Minimum Size"
+  default     = 1
+}
+
+variable "eks_log_retention" {
+  description = "How long to store eks logs in cloudwatch"
+  default     = 3
+}
+
+variable nodes {     
+  description = "Node values"
+  type = list( object({
+    ami-type       = string
+    instance-types = string
+    capacity-type  = string
+	disk-size      = number
+  }))
+  default = {
+    ami-type       = "AL2_x86_64"
+    instance-types = '["t2.micro"]'
+    capacity-type  = "ON_DEMAND"
+	disk-size      = 20
+  }
 
 
 

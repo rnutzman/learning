@@ -30,7 +30,7 @@ resource "aws_eks_cluster" "my-eks-cluster" {
   ]
 }
 
-resource "aws_eks_addon" "addon_csi_driver" {
+resource "aws_eks_addon" "load_addons" {
   count = var.addon-cnt
   
   cluster_name = aws_eks_cluster.my-eks-cluster.name
@@ -57,17 +57,16 @@ resource "aws_eks_addon" "addon_csi_driver" {
 
 
 # EKS Node Group
-data "aws_ssm_parameter" "eks_ami_release_version" {
-  name = "/aws/service/eks/optimized-ami/${aws_eks_cluster.my-eks-cluster.version}/amazon-linux-2/recommended/release_version"
-}
-
 resource "aws_eks_node_group" "worker-node-group" {
   cluster_name    = var.cluster_name
   node_group_name = "my-eks-cluster-workernodes"
   node_role_arn   = aws_iam_role.eks-workernode-iam-role.arn
   subnet_ids      = aws_subnet.eks-subnets[*].id 
-  release_version = nonsensitive(data.aws_ssm_parameter.eks_ami_release_version.value)
-  instance_types  = ["t2.micro"]
+
+  ami_type        = var.nodes.ami-type
+  instance_types  = var.nodes.instance-types
+  capacity_type   = var.nodes.capacity-type
+  disk_size       = var.nodes.disk-size
 
   remote_access {
     ec2_ssh_key               = var.ec2_ssh_key
