@@ -69,71 +69,56 @@ variable "eks_log_retention" {
 
 
 # Cluster Addon Variables
-variable "csi_driver_addon" {
-  description = "csi_driver_addon with version"
+variable "addon-cnt" {
+  description = "Number of addons to process"
+  default = 4
+}
+
+variable "addon" {
+  description = "Kubernetes addon values"
   type = list( object({
-    name     = string
-    version  = string
-    role-arn = string
+    name           = string
+    version        = string
+    role-arn       = string
+	create-timeout = string
+	update-timeout = string
+	delete-timeout = string
   }))
   default = [
   {
-    name     = "aws-ebs-csi-driver"
-    version  = null
-    role-arn = null
+    name           = "aws-ebs-csi-driver"
+    version        = null
+    role-arn       = null
+	create-timeout = "30m"
+    update-timeout = "20m"
+    delete-timeout = "20m"
   },
   }
-    name     = "coredns"
-    version  = null
-    role-arn = null
+    name           = "coredns"
+    version        = null
+    role-arn       = null
+	create-timeout = "30m"
+    update-timeout = "20m"
+    delete-timeout = "20m"
   },	
   }
-    name     = "kube-proxy"
-    version  = null
-    role-arn = null
+    name           = "kube-proxy"
+    version        = null
+    role-arn       = null
+	create-timeout = "30m"
+    update-timeout = "20m"
+    delete-timeout = "20m"
   },	
   }
-    name     = "vpc-cni"
-    version  = null
-    role-arn = null
+    name           = "vpc-cni"
+    version        = null
+    role-arn       = null
+	create-timeout = "30m"
+    update-timeout = "20m"
+    delete-timeout = "20m"
   }]	
 }
 
-variable "core_dns_addon" {
-  description = "core_dns addon with version"
-  type = object({
-    name     = string
-    version  = string
-  })
-  default = {
-    name     = "coredns"
-    version  = null
-  }
-}
-
-variable "kube_proxy_addon" {
-  description = "kube-proxy addon with version"
-  type = object({
-    name     = string
-    version  = string
-  })
-  default = {
-    name     = "kube-proxy"
-    version  = null
-  }
-}
-
-variable "vpc_cni_addon" {
-  description = "vpc-cni addon with version"
-  type = object({
-    name     = string
-    version  = string
-  })
-  default = {
-    name     = "vpc-cni"
-    version  = null
-  }
-}
 
 
 

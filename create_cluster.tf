@@ -30,77 +30,21 @@ resource "aws_eks_cluster" "my-eks-cluster" {
   ]
 }
 
-resource "aws_eks_addon" "addon_vpc_cni" {
-  cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.vpc_cni_addon.name
-  addon_version               = var.vpc_cni_addon.version
-  resolve_conflicts_on_update = "OVERWRITE"
-  resolve_conflicts_on_create = "OVERWRITE"
-
-  timeouts {
-    create = "30m"
-    update = "20m"
-    delete = "20m"
-  }
-
-  depends_on = [
-    aws_iam_role.eks-cluster-iam-role, 
-    aws_eks_cluster.my-eks-cluster, 
-    aws_eks_node_group.worker-node-group]
-}
-
-resource "aws_eks_addon" "addon_core_dns" {
-  cluster_name                = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.core_dns_addon.name
-  addon_version               = var.core_dns_addon.version
-  resolve_conflicts_on_update = "OVERWRITE"
-  resolve_conflicts_on_create = "OVERWRITE"
-
-  timeouts {
-    create = "30m"
-    update = "20m"
-    delete = "20m"
-  }
-
-  depends_on = [
-    aws_iam_role.eks-cluster-iam-role, 
-    aws_eks_cluster.my-eks-cluster, 
-    aws_eks_node_group.worker-node-group
-  ]
-}
-
-resource "aws_eks_addon" "addon_kube_proxy" {
-  cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.kube_proxy_addon.name
-  addon_version               = var.kube_proxy_addon.version
-  resolve_conflicts_on_update = "OVERWRITE"
-  resolve_conflicts_on_create = "OVERWRITE"
-
-  timeouts {
-    create = "30m"
-    update = "20m"
-    delete = "20m"
-  }
-
-  depends_on = [
-    aws_iam_role.eks-cluster-iam-role, 
-    aws_eks_cluster.my-eks-cluster, 
-    aws_eks_node_group.worker-node-group
-  ]
-}
-
 resource "aws_eks_addon" "addon_csi_driver" {
+  count = var.addon-cnt
+  
   cluster_name = aws_eks_cluster.my-eks-cluster.name
-  addon_name                  = var.csi_driver_addon.name
-  addon_version               = var.csi_driver_addon.version
-  service_account_role_arn    = var.csi_driver_addon.role-arn
+  
+  addon_name                  = var.addon[count.index].name
+  addon_version               = var.addon[count.index].version
+  service_account_role_arn    = var.addon[count.index].role-arn
   resolve_conflicts_on_update = "OVERWRITE"
   resolve_conflicts_on_create = "OVERWRITE"
 
   timeouts {
-    create = "30m"
-    update = "20m"
-    delete = "20m"
+    create = var.addon[count.index].create-timeout
+    update = var.addon[count.index].update-timeout
+    delete = var.addon[count.index].delete-timeout
   }
 
   depends_on = [
@@ -126,7 +70,7 @@ resource "aws_eks_node_group" "worker-node-group" {
   instance_types  = ["t2.micro"]
 
   remote_access {
-    ec2_ssh_key = var.ec2_ssh_key
+    ec2_ssh_key               = var.ec2_ssh_key
     source_security_group_ids = [aws_security_group.eks-node-sg.id]
   }
 

@@ -62,4 +62,102 @@ resource "aws_autoscaling_group" "eks_autoscaling_group" {
   }	
 }
 
+
+
+variable "core_dns_addon" {
+  description = "core_dns addon with version"
+  type = object({
+    name     = string
+    version  = string
+  })
+  default = {
+    name     = "coredns"
+    version  = null
+  }
+}
+
+variable "kube_proxy_addon" {
+  description = "kube-proxy addon with version"
+  type = object({
+    name     = string
+    version  = string
+  })
+  default = {
+    name     = "kube-proxy"
+    version  = null
+  }
+}
+
+variable "vpc_cni_addon" {
+  description = "vpc-cni addon with version"
+  type = object({
+    name     = string
+    version  = string
+  })
+  default = {
+    name     = "vpc-cni"
+    version  = null
+  }
+}
+
+resource "aws_eks_addon" "addon_vpc_cni" {
+  cluster_name = aws_eks_cluster.my-eks-cluster.name
+  addon_name                  = var.vpc_cni_addon.name
+  addon_version               = var.vpc_cni_addon.version
+  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
+
+  timeouts {
+    create = "30m"
+    update = "20m"
+    delete = "20m"
+  }
+
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster, 
+    aws_eks_node_group.worker-node-group]
+}
+
+resource "aws_eks_addon" "addon_core_dns" {
+  cluster_name                = aws_eks_cluster.my-eks-cluster.name
+  addon_name                  = var.core_dns_addon.name
+  addon_version               = var.core_dns_addon.version
+  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
+
+  timeouts {
+    create = "30m"
+    update = "20m"
+    delete = "20m"
+  }
+
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster, 
+    aws_eks_node_group.worker-node-group
+  ]
+}
+
+resource "aws_eks_addon" "addon_kube_proxy" {
+  cluster_name = aws_eks_cluster.my-eks-cluster.name
+  addon_name                  = var.kube_proxy_addon.name
+  addon_version               = var.kube_proxy_addon.version
+  resolve_conflicts_on_update = "OVERWRITE"
+  resolve_conflicts_on_create = "OVERWRITE"
+
+  timeouts {
+    create = "30m"
+    update = "20m"
+    delete = "20m"
+  }
+
+  depends_on = [
+    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster, 
+    aws_eks_node_group.worker-node-group
+  ]
+}
+
+
 */
