@@ -11,6 +11,8 @@
 # configmap
 
 
+
+
 resource "aws_eks_cluster" "my-eks-cluster" {
   name     = var.cluster_name 
   role_arn = aws_iam_role.eks-cluster-iam-role.arn
@@ -46,9 +48,15 @@ resource "aws_eks_addon" "load_addons" {
     update = var.addon[count.index].update-timeout
     delete = var.addon[count.index].delete-timeout
   }
-
+  
+  tags = {
+    "Name"        = var.addon[count.index].name
+    "EKS Cluster" = aws_eks_cluster.my-eks-cluster.name
+  }	
+  
   depends_on = [
-    aws_iam_role.eks-cluster-iam-role, 
+    aws_eks_cluster.my-eks-cluster,
+	aws_iam_role.eks-cluster-iam-role, 
     aws_eks_cluster.my-eks-cluster, 
     aws_eks_node_group.worker-node-group
   ]
@@ -75,11 +83,12 @@ resource "aws_eks_node_group" "worker-node-group" {
 
   scaling_config {
     desired_size = var.asg-desired-size
-    max_size   = var.asg-max-size
-    min_size   = var.asg-min-size
+    max_size     = var.asg-max-size
+    min_size     = var.asg-min-size
   }
  
   depends_on = [
+    aws_eks_cluster.my-eks-cluster,
     aws_iam_role.eks-workernode-iam-role,
     aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
     aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy,
