@@ -124,19 +124,19 @@ variable "eks_log_retention" {
 
 variable nodes {     
   description = "Node values"
-  type = list( object({
+  type = object({
     ami-type       = string
     instance-types = string
     capacity-type  = string
 	disk-size      = number
-  }))
+  })
   default = {
     ami-type       = "AL2_x86_64"
     instance-types = '["t2.micro"]'
     capacity-type  = "ON_DEMAND"
-	disk-size      = 20
+    disk-size      = 20
   }
-
+}
 
 
 variable "default_tags" {
