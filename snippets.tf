@@ -116,7 +116,8 @@ resource "aws_eks_addon" "addon_vpc_cni" {
   depends_on = [
     aws_iam_role.eks-cluster-iam-role, 
     aws_eks_cluster.my-eks-cluster, 
-    aws_eks_node_group.worker-node-group]
+    aws_eks_node_group.worker-node-group
+  ]
 }
 
 resource "aws_eks_addon" "addon_core_dns" {
