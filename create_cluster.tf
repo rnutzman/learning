@@ -76,10 +76,10 @@ resource "aws_eks_node_group" "worker-node-group" {
   capacity_type   = var.nodes.capacity-type
   disk_size       = var.nodes.disk-size
 
-  remote_access {
-    ec2_ssh_key               = var.ec2_ssh_key
-    source_security_group_ids = [aws_security_group.eks-node-sg.id]
-  }
+  #remote_access {
+  #  ec2_ssh_key               = var.ec2_ssh_key
+  #  source_security_group_ids = [aws_security_group.eks-node-sg.id]
+  #}
 
   scaling_config {
     desired_size = var.asg-desired-size
