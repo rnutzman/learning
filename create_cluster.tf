@@ -63,7 +63,7 @@ resource "aws_eks_addon" "load_addons" {
 }
 
 
-/#
+/*
 # EKS Node Group
 resource "aws_eks_node_group" "worker-node-group" {
   cluster_name    = var.cluster_name
@@ -99,7 +99,7 @@ resource "aws_eks_node_group" "worker-node-group" {
     #aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
   ]
 }
-#/
+*/
 
 resource "aws_cloudwatch_log_group" "eks_cloudwatch_logs" {
   name              = "/aws/eks/${var.cluster_name}/cluster"
