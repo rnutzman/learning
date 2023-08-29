@@ -85,38 +85,39 @@ variable "addon" {
 	delete-timeout = string
   }))
   default = [
-  {
-    name           = "aws-ebs-csi-driver"
-    version        = null
-    role-arn       = null
-	create-timeout = "30m"
-    update-timeout = "20m"
-    delete-timeout = "20m"
-  },
-  }
-    name           = "coredns"
-    version        = null
-    role-arn       = null
-	create-timeout = "30m"
-    update-timeout = "20m"
-    delete-timeout = "20m"
-  },	
-  }
-    name           = "kube-proxy"
-    version        = null
-    role-arn       = null
-	create-timeout = "30m"
-    update-timeout = "20m"
-    delete-timeout = "20m"
-  },	
-  }
-    name           = "vpc-cni"
-    version        = null
-    role-arn       = null
-	create-timeout = "30m"
-    update-timeout = "20m"
-    delete-timeout = "20m"
-  }]	
+    {
+      name           = "aws-ebs-csi-driver"
+      version        = null
+      role-arn       = null
+	  create-timeout = "30m"
+      update-timeout = "20m"
+      delete-timeout = "20m"
+    },
+    {
+      name           = "coredns"
+      version        = null
+      role-arn       = null
+	  create-timeout = "30m"
+      update-timeout = "20m"
+      delete-timeout = "20m"
+    },
+    {
+      name           = "kube-proxy"
+      version        = null
+      role-arn       = null
+	  create-timeout = "30m"
+      update-timeout = "20m"
+      delete-timeout = "20m"
+    },
+    {
+      name           = "vpc-cni"
+      version        = null
+      role-arn       = null
+	  create-timeout = "30m"
+      update-timeout = "20m"
+      delete-timeout = "20m"
+    }
+  ]	
 }
 
 
