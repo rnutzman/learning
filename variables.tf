@@ -78,8 +78,8 @@ variable "csi_driver_addon" {
   })
   default = {
     name     = "aws-ebs-csi-driver"
-    version  = ""
-    role-arn = ""
+    version  = null
+    role-arn = null
   }
 }
 
@@ -99,11 +99,11 @@ variable "kube_proxy_addon" {
   description = "kube-proxy addon with version"
   type = object({
     name     = string
-    version  = number
+    version  = string
   })
   default = {
     name     = "kube-proxy"
-    version  = -1
+    version  = null
   }
 }
 
@@ -111,11 +111,11 @@ variable "vpc_cni_addon" {
   description = "vpc-cni addon with version"
   type = object({
     name     = string
-    version  = number
+    version  = string
   })
   default = {
     name     = "vpc-cni"
-    version  = -1
+    version  = null
   }
 }
 
