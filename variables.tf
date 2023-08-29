@@ -71,16 +71,32 @@ variable "eks_log_retention" {
 # Cluster Addon Variables
 variable "csi_driver_addon" {
   description = "csi_driver_addon with version"
-  type = object({
+  type = list( object({
     name     = string
     version  = string
     role-arn = string
-  })
-  default = {
+  }))
+  default = [
+  {
     name     = "aws-ebs-csi-driver"
     version  = null
     role-arn = null
+  },
   }
+    name     = "coredns"
+    version  = null
+    role-arn = null
+  },	
+  }
+    name     = "kube-proxy"
+    version  = null
+    role-arn = null
+  },	
+  }
+    name     = "vpc-cni"
+    version  = null
+    role-arn = null
+  }]	
 }
 
 variable "core_dns_addon" {
