@@ -132,7 +132,7 @@ variable nodes {
   })
   default = {
     ami-type       = "AL2_x86_64"
-    instance-types = '["t2.micro"]'
+    instance-type  = "t2.micro"
     capacity-type  = "ON_DEMAND"
     disk-size      = 20
   }

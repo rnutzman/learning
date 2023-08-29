@@ -64,7 +64,7 @@ resource "aws_eks_node_group" "worker-node-group" {
   subnet_ids      = aws_subnet.eks-subnets[*].id 
 
   ami_type        = var.nodes.ami-type
-  instance_types  = var.nodes.instance-types
+  instance_types  = [var.nodes.instance-type]
   capacity_type   = var.nodes.capacity-type
   disk_size       = var.nodes.disk-size
 
