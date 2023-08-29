@@ -57,8 +57,8 @@ resource "aws_eks_addon" "load_addons" {
   depends_on = [
     aws_eks_cluster.my-eks-cluster,
 	aws_iam_role.eks-cluster-iam-role, 
-    aws_eks_cluster.my-eks-cluster, 
-    aws_eks_node_group.worker-node-group
+    aws_eks_cluster.my-eks-cluster 
+    #aws_eks_node_group.worker-node-group
   ]
 }
 
