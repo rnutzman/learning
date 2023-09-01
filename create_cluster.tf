@@ -11,8 +11,6 @@
 # configmap
 
 
-
-
 resource "aws_eks_cluster" "my-eks-cluster" {
   name     = var.cluster_name 
   role_arn = aws_iam_role.eks-cluster-iam-role.arn
