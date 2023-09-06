@@ -89,6 +89,11 @@ resource "aws_eks_node_group" "worker-node-group" {
     max_unavailable = 1
   }
 
+  tags = {
+    "Name"        = var.addon[count.index].name
+    "EKS Cluster" = aws_eks_cluster.my-eks-cluster.name
+  }
+
   depends_on = [
     aws_eks_cluster.my-eks-cluster,
     aws_iam_role.eks-workernode-iam-role,
