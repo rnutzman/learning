@@ -20,6 +20,11 @@ output "eks_workernode_role_arn" {
   value = aws_iam_role.eks-workernode-iam-role.arn
 }
 
+output "eks_workernode_role_name" {
+  description = "Name of the eks workernode role"
+  value = aws_iam_role.eks-workernode-iam-role.name
+}
+
 output "cluster_sg" {
   description = "Cluster Security Group"
   value = "Cluster Security Group: ${aws_security_group.eks-cluster-sg.name}"
